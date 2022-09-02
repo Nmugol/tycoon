@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "dyEr3BbyZIdgHYsv2EP88iC1Of1Ff3Jixo2usVQJNJ6tT/MJiz8LZ+fr7OaN5DajkE21X6n2Oq41Vrj8tJzodg==",
+  "success": true,
+  "projectFilePath": "/home/norbert/Dev/Godot/Tycoon/Tycoon.csproj",
+  "expectedPackageFiles": [
+    "/home/norbert/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.2/microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "/home/norbert/.nuget/packages/microsoft.netframework.referenceassemblies.net472/1.0.2/microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

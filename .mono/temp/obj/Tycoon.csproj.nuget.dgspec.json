@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/norbert/Dev/Godot/Tycoon/Tycoon.csproj": {}
+  },
+  "projects": {
+    "/home/norbert/Dev/Godot/Tycoon/Tycoon.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/norbert/Dev/Godot/Tycoon/Tycoon.csproj",
+        "projectName": "Tycoon",
+        "projectPath": "/home/norbert/Dev/Godot/Tycoon/Tycoon.csproj",
+        "packagesPath": "/home/norbert/.nuget/packages/",
+        "outputPath": "/home/norbert/Dev/Godot/Tycoon/.mono/temp/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/norbert/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.2, )",
+              "autoReferenced": true
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
