@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/t4.png-9b5438fb276959d8a13fd4bcfa6f37ed.stex"
+path="res://.import/weather.png-c796a189c4df1ba09b6bc07cc608b40c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Img/t4.png"
-dest_files=[ "res://.import/t4.png-9b5438fb276959d8a13fd4bcfa6f37ed.stex" ]
+source_file="res://Img/weather.png"
+dest_files=[ "res://.import/weather.png-c796a189c4df1ba09b6bc07cc608b40c.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/t9.png-a7214ce518ccba83f666ac52426ae26b.stex"
+path="res://.import/mountain.png-0e38733a2c8ad9d717f80c82c3ad2bb3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Img/t9.png"
-dest_files=[ "res://.import/t9.png-a7214ce518ccba83f666ac52426ae26b.stex" ]
+source_file="res://Img/mountain.png"
+dest_files=[ "res://.import/mountain.png-0e38733a2c8ad9d717f80c82c3ad2bb3.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

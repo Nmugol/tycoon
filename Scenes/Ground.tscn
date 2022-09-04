@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Script/teren.cs" type="Script" id=1]
+[ext_resource path="res://TileMap/Ground.tres" type="TileSet" id=2]
+
+[node name="Ground" type="Node2D"]
+
+[node name="teren" type="TileMap" parent="."]
+scale = Vector2( 2, 2 )
+mode = 1
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 16 )
+compatibility_mode = true
+format = 1
+script = ExtResource( 1 )
+map_size_x = 15
+map_size_y = 15
