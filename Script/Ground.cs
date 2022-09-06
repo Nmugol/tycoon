@@ -1,18 +1,24 @@
 using Godot;
 using System;
 
-public class teren : TileMap
+public class Ground : TileMap
 {
-    [Export] private int map_size_x = 7;
-    [Export] private int map_size_y = 7;
+    private int map_size_x;
+    private int map_size_y;
+
+    private Signal signalcs;
 
     private Random rand = new Random();
+    private Teren_data terenData = new Teren_data();
 
     public override void _Ready()
     {
-        int offset = map_size_x+1;
+        signalcs = GetNode<Signal>("/root/Signal");
+        signalcs.Connect("SetMountain",this,"_SetGround");
 
-        var tileId = TileSet.FindTileByName("Ground");
+        terenData._SetMapData(ref map_size_x, ref map_size_y);
+
+        int offset = map_size_x+1;
 
         _GenTeren(offset);
         _FindCellToRelpace(offset);
@@ -24,20 +30,16 @@ public class teren : TileMap
         {
             for(int j=0; j<map_size_y; j++)
             {
-                int procen = rand.Next(10);
+                int procen = rand.Next(13);
 
                 switch(procen)
                 {
-                    case 0: case 1://water
+                    case 0: case 1: //water
                         SetCell(i,j,2);
                     break;
 
-                    case 2://mountin
-                        SetCell(i,j,4);
-                    break;
-
-                    case 3: case 4://hole
-                        SetCell(i,j,3);
+                    case 2: case 3://hole
+                        SetCell(i,j,0);
                     break;
 
                     default://ground
@@ -74,25 +76,25 @@ public class teren : TileMap
         var cell4 = GetCell(x,y+1);
         
         // If cell aroun is hole replpac them water cell
-        if(cell1==3)
+        if(cell1==0)
         {
             SetCell(x-1,y,2);
             _ReplaceCell(x-1,y);
         }
         
-        if(cell2==3)
+        if(cell2==0)
         {
             SetCell(x,y-1,2);
             _ReplaceCell(x,y-1);
         }
         
-        if(cell3==3)
+        if(cell3==0)
         {
             SetCell(x+1,y,2);
             _ReplaceCell(x+1,y);
         }
         
-        if(cell4==3)
+        if(cell4==0)
         {
             SetCell(x,y+1,2);
             _ReplaceCell(x,y+1);
@@ -103,5 +105,10 @@ public class teren : TileMap
         {
             SetCell(x,y,1);
         }
+    }
+
+    void _SetGround(int x, int y)
+    {
+        SetCell(x,y,1);
     }
 }

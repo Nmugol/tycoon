@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Script/Ground.cs" type="Script" id=1]
+[ext_resource path="res://TileMap/ground.tres" type="TileSet" id=2]
+[ext_resource path="res://TileMap/Moutan_and_rock.tres" type="TileSet" id=3]
+[ext_resource path="res://Script/Mountain.cs" type="Script" id=4]
+[ext_resource path="res://Script/Teren_data.cs" type="Script" id=5]
+
+[node name="Teren" type="Node2D"]
+script = ExtResource( 5 )
+MapX = 30
+MapY = 30
+
+[node name="Ground" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 16 )
+show_collision = true
+format = 1
+script = ExtResource( 1 )
+
+[node name="Mountain" type="TileMap" parent="."]
+position = Vector2( 0, -16 )
+mode = 1
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 32, 16 )
+format = 1
+script = ExtResource( 4 )
