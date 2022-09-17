@@ -1,0 +1,80 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Script/Start_generate.cs" type="Script" id=1]
+
+[node name="Generate" type="PanelContainer"]
+margin_right = 185.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 178.0
+margin_bottom = 67.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 171.0
+margin_bottom = 16.0
+
+[node name="X_size_label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_top = 1.0
+margin_right = 38.0
+margin_bottom = 15.0
+text = "X size"
+
+[node name="X_sizie_slider" type="HSlider" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 42.0
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 6.0
+max_value = 30.0
+value = 6.0
+
+[node name="X-value" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 163.0
+margin_top = 1.0
+margin_right = 171.0
+margin_bottom = 15.0
+text = "6"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 20.0
+margin_right = 171.0
+margin_bottom = 36.0
+
+[node name="Y_sizie_label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_top = 1.0
+margin_right = 37.0
+margin_bottom = 15.0
+text = "Y size"
+
+[node name="Y_sizie_slider" type="HSlider" parent="VBoxContainer/HBoxContainer"]
+margin_left = 41.0
+margin_right = 159.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 6.0
+max_value = 30.0
+value = 6.0
+
+[node name="Y_value" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 163.0
+margin_top = 1.0
+margin_right = 171.0
+margin_bottom = 15.0
+text = "6"
+
+[node name="Generate" type="Button" parent="VBoxContainer"]
+margin_top = 40.0
+margin_right = 171.0
+margin_bottom = 60.0
+text = "Gen"
+script = ExtResource( 1 )
+X_label_path = NodePath("../HBoxContainer2/X-value")
+Y_label_path = NodePath("../HBoxContainer/Y_value")
+
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer2/X_sizie_slider" to="VBoxContainer/Generate" method="_on_X_sizie_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/Y_sizie_slider" to="VBoxContainer/Generate" method="_on_Y_sizie_slider_value_changed"]
+[connection signal="button_down" from="VBoxContainer/Generate" to="VBoxContainer/Generate" method="_on_Generate_button_down"]

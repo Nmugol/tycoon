@@ -14,16 +14,17 @@ public class Mountain : TileMap
     public override void _Ready()
     {
         signalcs = GetNode<Signal>("/root/Signal");
-
-        terenData._SetMapData(ref map_size_x, ref map_size_y);
-
-        int offset = map_size_x+1;
-        _GenTeren(offset);
+        signalcs.Connect("StartGenarate",this,"_GenTeren");
     }
 
-    private void _GenTeren(int offset)
+    private void _GenTeren(int x_size, int y_size)
     {
-        for(int i=offset; i<map_size_x+offset; i++)
+        map_size_x = x_size;
+        map_size_y = y_size;
+
+        _CleraMap(map_size_x,map_size_y);
+
+        for(int i=(map_size_x+1); i<((2*map_size_x)+1); i++)
         {
             for(int j=0; j<map_size_y; j++)
             {
@@ -35,8 +36,24 @@ public class Mountain : TileMap
                         SetCell(i,j,0);
                         signalcs.EmitSignal(nameof(Signal.SetMountain),i,j);
                     break;
+
+                    default://void
+                        SetCell(i,j,-1);
+                    break;
                 }
             }
         }
+    }
+
+    private void _CleraMap(int size_x, int size_y)
+    {
+
+        for(int i=-1; i<1000; i++)
+        {
+            for(int j=-1; j<1000; j++)
+            {
+                SetCell(i,j,-1);
+            }
+        } 
     }
 }

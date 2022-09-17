@@ -15,18 +15,17 @@ public class Ground : TileMap
     {
         signalcs = GetNode<Signal>("/root/Signal");
         signalcs.Connect("SetMountain",this,"_SetGround");
-
-        terenData._SetMapData(ref map_size_x, ref map_size_y);
-
-        int offset = map_size_x+1;
-
-        _GenTeren(offset);
-        _FindCellToRelpace(offset);
+        signalcs.Connect("StartGenarate",this,"_GenTeren");
     }
-
-    private void _GenTeren(int offset)
+    
+    private void _GenTeren(int x_size, int y_size)
     {
-        for(int i=offset; i<map_size_x+offset; i++)
+        map_size_x = x_size;
+        map_size_y = y_size;
+
+        _CleraMap(map_size_x,map_size_y);
+
+        for(int i=(map_size_x+1); i<((2*map_size_x)+1); i++)
         {
             for(int j=0; j<map_size_y; j++)
             {
@@ -48,12 +47,13 @@ public class Ground : TileMap
                 }
             }
         }
+        _FindCellToRelpace();
     }
 
     // Find a water call on map
-    private void _FindCellToRelpace( int offset)
+    private void _FindCellToRelpace()
     {
-        for(int i=offset; i<map_size_x+offset; i++)
+        for(int i=(map_size_x+1); i<((2*map_size_x)+1); i++)
         {
             for(int j=0; j<map_size_y; j++)
             {
@@ -107,8 +107,28 @@ public class Ground : TileMap
         }
     }
 
-    void _SetGround(int x, int y)
+    private void _SetGround(int x, int y)
     {
         SetCell(x,y,1);
     }
+
+    private void _CleraMap(int size_x, int size_y)
+    {
+        for(int i=-1; i<1000; i++)
+        {
+            for(int j=-1; j<1000; j++)
+            {
+                SetCell(i,j,-1);
+            }
+        } 
+    }
+
+/*
+    get mous position
+    public override void _Process(float delta)
+    {
+        var mouse_tile = WorldToMap(GetGlobalMousePosition());
+
+        GD.Print(mouse_tile);
+    }*/
 }

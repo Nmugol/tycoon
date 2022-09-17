@@ -8,8 +8,6 @@
 
 [node name="Teren" type="Node2D"]
 script = ExtResource( 5 )
-MapX = 30
-MapY = 30
 
 [node name="Ground" type="TileMap" parent="."]
 mode = 1
