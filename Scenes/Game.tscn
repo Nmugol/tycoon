@@ -1,16 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scenes/Save_and_load.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Generate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Teren.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Factories.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Node2D"]
+
+[node name="Generate" parent="." instance=ExtResource( 1 )]
+margin_top = 620.0
+margin_right = 200.0
+margin_bottom = 720.0
 
 [node name="Teren" parent="." instance=ExtResource( 2 )]
 MapX = 15
 MapY = 15
 
-[node name="Save_and_load" parent="." instance=ExtResource( 1 )]
-margin_left = 641.0
-margin_top = 4.0
-margin_right = 641.0
-margin_bottom = 4.0
+[node name="Factories" parent="." instance=ExtResource( 3 )]

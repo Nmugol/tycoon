@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://TileMap/Factories.tres" type="TileSet" id=1]
+[ext_resource path="res://Img/factory.png" type="Texture" id=2]
+
+[node name="Factories" type="Node2D"]
+
+[node name="Shope" type="PanelContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 1080.0
+margin_right = 1280.0
+margin_bottom = 720.0
+
+[node name="Items" type="VBoxContainer" parent="Shope"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 204.0
+margin_bottom = 713.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shope/Items"]
+margin_right = 197.0
+margin_bottom = 32.0
+
+[node name="Factory" type="TextureButton" parent="Shope/Items/HBoxContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture_normal = ExtResource( 2 )
+flip_h = true
+
+[node name="Factory_describe" type="Label" parent="Shope/Items/HBoxContainer"]
+margin_left = 36.0
+margin_right = 197.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "gen 1 ston per 10 secons"
+
+[node name="TileMap" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 16 )
+format = 1
