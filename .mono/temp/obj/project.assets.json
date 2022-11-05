@@ -420,11 +420,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/norbert/Dev/Godot/Tycoon/Tycoon.csproj",
+      "projectUniqueName": "/home/norbert/Dev/Godot/tycoon/Tycoon.csproj",
       "projectName": "Tycoon",
-      "projectPath": "/home/norbert/Dev/Godot/Tycoon/Tycoon.csproj",
+      "projectPath": "/home/norbert/Dev/Godot/tycoon/Tycoon.csproj",
       "packagesPath": "/home/norbert/.nuget/packages/",
-      "outputPath": "/home/norbert/Dev/Godot/Tycoon/.mono/temp/obj/",
+      "outputPath": "/home/norbert/Dev/Godot/tycoon/.mono/temp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/norbert/.nuget/NuGet/NuGet.Config"
@@ -458,7 +458,7 @@
             "autoReferenced": true
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.109/RuntimeIdentifierGraph.json"
       }
     }
   }

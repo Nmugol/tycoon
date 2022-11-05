@@ -15,6 +15,7 @@ public class Mountain : TileMap
     {
         signalcs = GetNode<Signal>("/root/Signal");
         signalcs.Connect("StartGenarate",this,"_GenTeren");
+        signalcs.Connect("CheckedMountein",this,"_CheckedMountein");
     }
 
     private void _GenTeren(int x_size, int y_size)
@@ -55,5 +56,13 @@ public class Mountain : TileMap
                 SetCell(i,j,-1);
             }
         } 
+    }
+
+    private void _CheckedMountein(int x, int y)
+    {
+        if(GetCell(x,y)!=0)
+        {
+            signalcs.EmitSignal(nameof(Signal.MounteinIsFree));
+        }
     }
 }

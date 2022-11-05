@@ -16,6 +16,7 @@ public class Ground : TileMap
         signalcs = GetNode<Signal>("/root/Signal");
         signalcs.Connect("SetMountain",this,"_SetGround");
         signalcs.Connect("StartGenarate",this,"_GenTeren");
+        signalcs.Connect("CheckedGround",this,"_CheckedGround");
     }
     
     private void _GenTeren(int x_size, int y_size)
@@ -23,7 +24,7 @@ public class Ground : TileMap
         map_size_x = x_size;
         map_size_y = y_size;
 
-        _CleraMap(map_size_x,map_size_y);
+        _ClearMap(map_size_x,map_size_y);
 
         for(int i=(map_size_x+1); i<((2*map_size_x)+1); i++)
         {
@@ -107,12 +108,14 @@ public class Ground : TileMap
         }
     }
 
+    //ste groun cels under moutein
     private void _SetGround(int x, int y)
     {
         SetCell(x,y,1);
     }
 
-    private void _CleraMap(int size_x, int size_y)
+    //rmowe all cells on map
+    private void _ClearMap(int size_x, int size_y)
     {
         for(int i=-1; i<1000; i++)
         {
@@ -121,6 +124,14 @@ public class Ground : TileMap
                 SetCell(i,j,-1);
             }
         } 
+    }
+
+    private void _CheckedGround(int x,int y)
+    {
+        if(GetCell(x,y)==1)
+        {
+            signalcs.EmitSignal(nameof(Signal.GroundIsFree));
+        }
     }
 
 /*
