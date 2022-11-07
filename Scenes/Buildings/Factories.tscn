@@ -5,7 +5,7 @@
 [ext_resource path="res://Img/Buildings/factory_disable.png" type="Texture" id=3]
 [ext_resource path="res://Script/Buildings/Buildings.cs" type="Script" id=4]
 [ext_resource path="res://Img/Buildings/factory_preset.png" type="Texture" id=5]
-[ext_resource path="res://Scenes/Store_items/Item.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Img/Store_items/stone.png" type="Texture" id=6]
 [ext_resource path="res://Script/Store_items/Storage.cs" type="Script" id=7]
 
 [node name="Factories" type="Node2D"]
@@ -55,6 +55,11 @@ margin_bottom = 706.0
 rect_min_size = Vector2( 0, 150 )
 rect_pivot_offset = Vector2( -1712, -474 )
 script = ExtResource( 7 )
+Grid = NodePath("GridContainer")
+Item_Img = [ ExtResource( 6 ), ExtResource( 5 ) ]
+Item_Counter = PoolIntArray( 100, 50 )
+Item_Img_Path = [ NodePath("GridContainer/Stone/Stone_Img"), NodePath("GridContainer/Gold/Stone_Img") ]
+Item_Counter_Path = [ NodePath("GridContainer/Stone/Stone_counter"), NodePath("GridContainer/Gold/Gold_counter") ]
 
 [node name="GridContainer" type="GridContainer" parent="Shope/Buildings list/Storage"]
 margin_left = 7.0
@@ -63,13 +68,29 @@ margin_right = 204.0
 margin_bottom = 143.0
 columns = 3
 
-[node name="Item" parent="Shope/Buildings list/Storage/GridContainer" instance=ExtResource( 6 )]
+[node name="Stone" type="HBoxContainer" parent="Shope/Buildings list/Storage/GridContainer"]
+margin_right = 4.0
+margin_bottom = 14.0
+
+[node name="Stone_Img" type="TextureRect" parent="Shope/Buildings list/Storage/GridContainer/Stone"]
+margin_bottom = 14.0
+
+[node name="Stone_counter" type="Label" parent="Shope/Buildings list/Storage/GridContainer/Stone"]
+margin_left = 4.0
+margin_right = 4.0
+margin_bottom = 14.0
+
+[node name="Gold" type="HBoxContainer" parent="Shope/Buildings list/Storage/GridContainer"]
+margin_left = 8.0
 margin_right = 12.0
 margin_bottom = 14.0
 
-[node name="Item2" parent="Shope/Buildings list/Storage/GridContainer" instance=ExtResource( 6 )]
-margin_left = 16.0
-margin_right = 28.0
+[node name="Stone_Img" type="TextureRect" parent="Shope/Buildings list/Storage/GridContainer/Gold"]
+margin_bottom = 14.0
+
+[node name="Gold_counter" type="Label" parent="Shope/Buildings list/Storage/GridContainer/Gold"]
+margin_left = 4.0
+margin_right = 4.0
 margin_bottom = 14.0
 
 [node name="Buildings" type="TileMap" parent="."]
