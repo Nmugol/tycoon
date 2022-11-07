@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scenes/Generate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Teren.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Factories.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Buildings/Factories.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Node2D"]
 
@@ -12,7 +12,5 @@ margin_right = 200.0
 margin_bottom = 720.0
 
 [node name="Teren" parent="." instance=ExtResource( 2 )]
-MapX = 15
-MapY = 15
 
 [node name="Factories" parent="." instance=ExtResource( 3 )]

@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=2 format=2]
 
-[ext_resource path="res://Img/mountain.png" type="Texture" id=1]
+[ext_resource path="res://Img/Teren/mountain.png" type="Texture" id=1]
 
 [resource]
 0/name = "mountain.png 0"

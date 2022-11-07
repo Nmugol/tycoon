@@ -1,8 +1,8 @@
 [gd_resource type="TileSet" load_steps=4 format=2]
 
-[ext_resource path="res://Img/hole.png" type="Texture" id=1]
-[ext_resource path="res://Img/moon.png" type="Texture" id=2]
-[ext_resource path="res://Img/weather.png" type="Texture" id=3]
+[ext_resource path="res://Img/Teren/hole.png" type="Texture" id=1]
+[ext_resource path="res://Img/Teren/moon.png" type="Texture" id=2]
+[ext_resource path="res://Img/Teren/weather.png" type="Texture" id=3]
 
 [resource]
 0/name = "hole.png 0"
