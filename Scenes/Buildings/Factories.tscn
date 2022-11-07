@@ -1,0 +1,83 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://TileMap/Factories.tres" type="TileSet" id=1]
+[ext_resource path="res://Img/Buildings/factory.png" type="Texture" id=2]
+[ext_resource path="res://Img/Buildings/factory_disable.png" type="Texture" id=3]
+[ext_resource path="res://Script/Buildings/Buildings.cs" type="Script" id=4]
+[ext_resource path="res://Img/Buildings/factory_preset.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Store_items/Item.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Script/Store_items/Storage.cs" type="Script" id=7]
+
+[node name="Factories" type="Node2D"]
+
+[node name="Shope" type="PanelContainer" parent="."]
+margin_left = 1050.0
+margin_right = 1000.0
+margin_bottom = 720.0
+rect_pivot_offset = Vector2( -682, -35 )
+
+[node name="Buildings list" type="VBoxContainer" parent="Shope"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 218.0
+margin_bottom = 713.0
+
+[node name="PanelContainer2" type="PanelContainer" parent="Shope/Buildings list"]
+margin_right = 211.0
+margin_bottom = 552.0
+size_flags_vertical = 3
+
+[node name="Building" type="HBoxContainer" parent="Shope/Buildings list/PanelContainer2"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 204.0
+margin_bottom = 545.0
+
+[node name="Building button" type="TextureButton" parent="Shope/Buildings list/PanelContainer2/Building"]
+margin_right = 32.0
+margin_bottom = 538.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 5 )
+texture_disabled = ExtResource( 3 )
+flip_h = true
+
+[node name="Building description" type="Label" parent="Shope/Buildings list/PanelContainer2/Building"]
+margin_left = 36.0
+margin_right = 197.0
+margin_bottom = 538.0
+size_flags_vertical = 5
+text = "gen 1 ston per 10 secons"
+
+[node name="Storage" type="PanelContainer" parent="Shope/Buildings list"]
+margin_top = 556.0
+margin_right = 211.0
+margin_bottom = 706.0
+rect_min_size = Vector2( 0, 150 )
+rect_pivot_offset = Vector2( -1712, -474 )
+script = ExtResource( 7 )
+
+[node name="GridContainer" type="GridContainer" parent="Shope/Buildings list/Storage"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 204.0
+margin_bottom = 143.0
+columns = 3
+
+[node name="Item" parent="Shope/Buildings list/Storage/GridContainer" instance=ExtResource( 6 )]
+margin_right = 12.0
+margin_bottom = 14.0
+
+[node name="Item2" parent="Shope/Buildings list/Storage/GridContainer" instance=ExtResource( 6 )]
+margin_left = 16.0
+margin_right = 28.0
+margin_bottom = 14.0
+
+[node name="Buildings" type="TileMap" parent="."]
+position = Vector2( 0, -16 )
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 16 )
+format = 1
+script = ExtResource( 4 )
+
+[connection signal="pressed" from="Shope/Buildings list/PanelContainer2/Building/Building button" to="Buildings" method="_on_Factory_pressed"]
