@@ -11,12 +11,15 @@ public class Buildings : TileMap
     //help flag to seting building
     private bool groun_is_free=false;
     private bool mountaun_is_free=false;
+    private bool have_resorces=false;
 
     public override void _Ready()
     {
         signalcs = GetNode<Signal>("/root/Signal");
         signalcs.Connect("GroundIsFree",this,"_GroundIsFree");
         signalcs.Connect("MounteinIsFree",this,"_MounteinIsFree");
+        signalcs.Connect("YesHaveResorces",this,"_YesHaveResorces");
+        signalcs.Connect("NoHaveResorces",this,"_NoHaveResorces");
     }
 
     public override void _Process(float delta)
@@ -31,19 +34,23 @@ public class Buildings : TileMap
 
         if(Input.IsActionJustPressed("lmb"))
         {
+            signalcs.EmitSignal(nameof(Signal.CheckedGround),cell_pos_x,cell_pos_y);
+            signalcs.EmitSignal(nameof(Signal.CheckedMountein),cell_pos_x,cell_pos_y);
             //if palyer whone to build factory then cheked them groun is free ando don't hawen't mountein on this cell
-            if(factory_type!=-1)
+            switch(factory_type)
             {
-                signalcs.EmitSignal(nameof(Signal.CheckedGround),cell_pos_x,cell_pos_y);
-                signalcs.EmitSignal(nameof(Signal.CheckedMountein),cell_pos_x,cell_pos_y);
+                case 0:
+                    signalcs.EmitSignal(nameof(Signal.HaveResorces),"stone", 50);
 
-                if(groun_is_free==true && mountaun_is_free==true)
-                {
-                    SetCell(cell_pos_x,cell_pos_y,factory_type);
-                }
-
-                _Reset();
+                    if(groun_is_free && mountaun_is_free && have_resorces)
+                    {
+                        SetCell(cell_pos_x,cell_pos_y,factory_type);
+                        signalcs.EmitSignal(nameof(Signal.SetTimer),"stone",10,15);
+                    }
+                break;
+                
             }
+            _Reset();
         }
     }
 
@@ -62,11 +69,22 @@ public class Buildings : TileMap
         mountaun_is_free=true;
     }
 
+    private void _YesHaveResorces()
+    {
+        have_resorces=true;
+    }
+
+    private void _NoHaveResorces()
+    {
+        have_resorces=false;
+    }
+
     //restet all value usin to bild buildings
     private void _Reset()
     {
         factory_type=-1;
         groun_is_free=false;
         mountaun_is_free=false;
+        have_resorces=false;
     }
 }

@@ -5,20 +5,28 @@ using System.Collections.Generic;
 
 public class Storage : PanelContainer
 {
+    private Signal signalcs;
     [Export] private Texture[] Item_icons;
-    
-    public override void _Ready()
-    {
-        Dictionary<string,int> Items = new Dictionary<string, int>(){
+
+    Dictionary<string,int> Items = new Dictionary<string, int>(){
             {"stone",100},
             {"irone",200}
         };
 
-        Add_Store(Items, this);
+    [Export] private NodePath Storenode;
+    
+    public override void _Ready()
+    {
+        signalcs = GetNode<Signal>("/root/Signal");
+        signalcs.Connect("HaveResorces",this,"_HaveResorces");
+        signalcs.Connect("Add_Resorses",this,"_Add_Resorses");
+
+        Add_Store(Items);
     }
 
-    private void Add_Store(Dictionary<string,int> Items, Node Storeroom)
+    private void Add_Store(Dictionary<string,int> Items)
     {
+        Node Storeroom = GetNode<Node>(Storenode);
         GridContainer grid = new GridContainer();
 
         int i=0;
@@ -32,13 +40,15 @@ public class Storage : PanelContainer
         grid.Columns=3;
     }
 
-    private void Remowe_Store(Node Store, Node Storeroom)
+    private void Remowe_Store()
     {
+        Node Storeroom = GetNode<Node>(Storenode);
+        Node Store = Storeroom.GetChild(0);
         Storeroom.RemoveChild(Store);
         Store.QueueFree();
     }
 
-    public Node Add_store_items(int how_many, Texture texture)
+    private Node Add_store_items(int how_many, Texture texture)
     {
         Label text = new Label();
         TextureRect icon = new TextureRect();
@@ -51,5 +61,25 @@ public class Storage : PanelContainer
         HBox.AddChild(text);
 
         return HBox;
+    }
+
+    private void _HaveResorces(string key, int value)
+    {
+        if(Items[key]>=value)
+        {
+            Items[key]-=value;
+            signalcs.EmitSignal(nameof(Signal.YesHaveResorces));
+            Remowe_Store();
+            Add_Store(Items);
+        }
+        else
+        signalcs.EmitSignal(nameof(Signal.NoHaveResorces));
+    }
+
+    private void _Add_Resorses(string key, int value)
+    {
+        Items[key]+=value;
+        Remowe_Store();
+        Add_Store(Items);
     }
 }
