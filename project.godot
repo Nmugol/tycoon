@@ -11,17 +11,24 @@ config_version=4
 [application]
 
 config/name="Tycoon"
-run/main_scene="res://Scenes/Game.tscn"
+run/main_scene="res://Scenes/Menu/Main_menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-Signal="*res://Script/Signal.cs"
+Signal="*res://Script/Autoload/Signal.cs"
+SaveBluprint="*res://Script/Autoload/Save_bluprint.cs"
+SaveData="*res://Script/Autoload/SaveData.cs"
 
 [display]
 
 window/size/width=1280
 window/size/height=720
+window/size/resizable=false
+
+[global]
+
+exter=false
 
 [gui]
 

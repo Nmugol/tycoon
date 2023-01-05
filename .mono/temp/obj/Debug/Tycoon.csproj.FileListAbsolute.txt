@@ -7,3 +7,5 @@
 /home/norbert/Dev/Godot/Tycoon/.mono/temp/bin/Debug/Tycoon.pdb
 /home/norbert/Dev/Godot/Tycoon/.mono/temp/obj/Debug/Tycoon.dll
 /home/norbert/Dev/Godot/Tycoon/.mono/temp/obj/Debug/Tycoon.pdb
+/home/norbert/Dev/Godot/tycoon/.mono/temp/bin/Debug/Newtonsoft.Json.dll
+/home/norbert/Dev/Godot/tycoon/.mono/temp/obj/Debug/Tycoon.csproj.CopyComplete

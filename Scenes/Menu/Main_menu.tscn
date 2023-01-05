@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Script/Menu/Exit.cs" type="Script" id=1]
+[ext_resource path="res://Script/Menu/Play.cs" type="Script" id=2]
+
+[node name="Main_menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Bacground" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Bacground"]
+margin_right = 200.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="CenterContainer" type="CenterContainer" parent="Bacground/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 207.0
+margin_bottom = 713.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Bacground/PanelContainer/CenterContainer"]
+margin_top = 274.0
+margin_right = 200.0
+margin_bottom = 432.0
+rect_min_size = Vector2( 200, 150 )
+size_flags_horizontal = 2
+
+[node name="Play" type="Button" parent="Bacground/PanelContainer/CenterContainer/VBoxContainer"]
+margin_right = 200.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+text = "PLay"
+script = ExtResource( 2 )
+
+[node name="Options" type="Button" parent="Bacground/PanelContainer/CenterContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 200.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 0, 50 )
+text = "Options"
+
+[node name="Exit" type="Button" parent="Bacground/PanelContainer/CenterContainer/VBoxContainer"]
+margin_top = 108.0
+margin_right = 200.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 0, 50 )
+text = "Exit"
+script = ExtResource( 1 )
+
+[connection signal="pressed" from="Bacground/PanelContainer/CenterContainer/VBoxContainer/Play" to="Bacground/PanelContainer/CenterContainer/VBoxContainer/Play" method="_on_Play_pressed"]
+[connection signal="pressed" from="Bacground/PanelContainer/CenterContainer/VBoxContainer/Exit" to="Bacground/PanelContainer/CenterContainer/VBoxContainer/Exit" method="_on_Exit_pressed"]

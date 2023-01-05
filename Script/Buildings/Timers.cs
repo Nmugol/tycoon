@@ -1,9 +1,11 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Timers : Node
 {
     private Signal signalcs;
+    private SaveData savedata;
     [Export] private NodePath Parent_path;
 
     private string resorce_to_add;
@@ -11,7 +13,33 @@ public class Timers : Node
     public override void _Ready()
     {
         signalcs = GetNode<Signal>("/root/Signal");
+        savedata = GetNode<SaveData>("/root/SaveData");
         signalcs.Connect("SetTimer",this,"_SetTimer");
+
+        File save = new File();
+        string path = "user://"+savedata.save_file+".json";
+
+        if(save.FileExists(path))
+        {
+            foreach(KeyValuePair<string,int[]> key in savedata.factory)
+            {
+                int[] table = key.Value;
+                int how_many = table[0];
+                int type = table[1];
+
+                for(int i = 0; i<how_many; i++)
+                {
+                    switch(type)
+                    {
+                        case 0:
+                            _SetTimer("stone",10,15);
+                            GD.Print("p");
+                        break;
+                    }
+                }
+
+            }
+        }
     }
 
     private void _SetTimer(string resorce, int time_dilay, int how_mady_add)

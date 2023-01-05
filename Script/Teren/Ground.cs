@@ -1,73 +1,116 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Ground : TileMap
 {
-    private int map_size_x;
-    private int map_size_y;
-
     private Signal signalcs;
+    private Save_bluprint save_file;
+    private SaveData savedata;
 
-    private Random rand = new Random();
+    int size;
 
     public override void _Ready()
     {
         signalcs = GetNode<Signal>("/root/Signal");
+        save_file = GetNode<Save_bluprint>("/root/SaveBluprint");
+        savedata = GetNode<SaveData>("/root/SaveData");
+
         signalcs.Connect("SetMountain",this,"_SetGround");
-        signalcs.Connect("StartGenarate",this,"_GenTeren");
         signalcs.Connect("CheckedGround",this,"_CheckedGround");
+
+        size = savedata.moon_size;
+        int[,] tail_tab = new int[size,size];
+
+        File save = new File();
+        string path = "user://"+savedata.save_file+".json";
+
+        if(save.FileExists(path)) _LoadMap();
+        else _StartGenarate(tail_tab);
     }
     
-    private void _GenTeren(int x_size, int y_size)
+    private void _StartGenarate(int[,]tail_tab)
     {
-        map_size_x = x_size;
-        map_size_y = y_size;
-
-        _ClearMap(map_size_x,map_size_y);
-
-        for(int i=(map_size_x+1); i<((2*map_size_x)+1); i++)
+        _ClearMap();
+        Random rng = new Random();
+        
+        int offsetx=1;
+        int offsety=0;
+        if(size == 20) offsetx += size/2;
+        if(size == 25) offsetx += size/4;
+        if(size == 30)
         {
-            for(int j=0; j<map_size_y; j++)
+            offsetx = -3;
+            offsety = -6; 
+        }
+        
+        for(int i=size+offsetx; i<(2*size)+offsetx; i++)
+        {
+            for(int j=0+offsety; j<size+offsety; j++)
             {
-                int procen = rand.Next(13);
+                int procen = rng.Next(13);
 
                 switch(procen)
                 {
                     case 0: case 1: //water
                         SetCell(i,j,2);
+                        tail_tab[i-(size+offsetx),j-offsety]=2;
                     break;
 
                     case 2: case 3://hole
                         SetCell(i,j,0);
+                        tail_tab[i-(size+offsetx),j-offsety]=0;
                     break;
 
                     default://ground
                         SetCell(i,j,1);
+                        tail_tab[i-(size+offsetx),j-offsety]=1;
                     break;
                 }
             }
         }
-        _FindCellToRelpace();
+        _FindCellToRelpace(tail_tab);
+        savedata.ground=tail_tab;
     }
 
     // Find a water call on map
-    private void _FindCellToRelpace()
+    private void _FindCellToRelpace(int[,]tail_tab)
     {
-        for(int i=(map_size_x+1); i<((2*map_size_x)+1); i++)
+        int offsetx=1;
+        int offsety=0;
+        if(size == 20) offsetx += size/2;
+        if(size == 25) offsetx += size/4;
+        if(size == 30)
         {
-            for(int j=0; j<map_size_y; j++)
+            offsetx = -3;
+            offsety = -6; 
+        }
+        
+        for(int i=size+offsetx; i<(2*size)+offsetx; i++)
+        {
+            for(int j=0+offsety; j<size+offsety; j++)
             {
                 var cellid = GetCell(i,j);
                 if(cellid==2)
                 {
-                    _ReplaceCell(i,j);
+                    _ReplaceCell(i,j,tail_tab);
                 }
             }
         }         
     }
 
-    private void _ReplaceCell(int x, int y)
+    private void _ReplaceCell(int x, int y, int[,]tail_tab)
     {
+        int offsetx=1;
+        int offsety=0;
+        if(size == 20) offsetx += size/2;
+        if(size == 25) offsetx += size/4;
+        if(size == 30)
+        {
+            offsetx = -3;
+            offsety = -6; 
+        }
+    
 
         // Get a typo of cell aroun water cell
         var cell1 = GetCell(x-1,y);
@@ -79,31 +122,36 @@ public class Ground : TileMap
         if(cell1==0)
         {
             SetCell(x-1,y,2);
-            _ReplaceCell(x-1,y);
+            tail_tab[x-(size+offsetx)-1,y-offsety]=2;
+            _ReplaceCell(x-1,y,tail_tab);
         }
         
         if(cell2==0)
         {
             SetCell(x,y-1,2);
-            _ReplaceCell(x,y-1);
+            tail_tab[x-(size+offsetx),y-offsety-1]=2;
+            _ReplaceCell(x,y-1,tail_tab);
         }
         
         if(cell3==0)
         {
             SetCell(x+1,y,2);
-            _ReplaceCell(x+1,y);
+            tail_tab[x-(size+offsetx)+1,y-offsety]=2;
+            _ReplaceCell(x+1,y,tail_tab);
         }
         
         if(cell4==0)
         {
             SetCell(x,y+1,2);
-            _ReplaceCell(x,y+1);
+            tail_tab[x-(size+offsetx),y-offsety+1]=2;
+            _ReplaceCell(x,y+1,tail_tab);
         }
 
         // If water cell is around moon cell replace it moon cell
         if(cell1==1 && cell2==1 && cell3==1 && cell4==1)
         {
             SetCell(x,y,1);
+            tail_tab[x-(size+offsetx),y-offsety]=1;
         }
     }
 
@@ -114,7 +162,7 @@ public class Ground : TileMap
     }
 
     //rmowe all cells on map
-    private void _ClearMap(int size_x, int size_y)
+    private void _ClearMap()
     {
         for(int i=-1; i<1000; i++)
         {
@@ -133,12 +181,39 @@ public class Ground : TileMap
         }
     }
 
-/*
-    get mous position
-    public override void _Process(float delta)
+    void _LoadMap()
     {
-        var mouse_tile = WorldToMap(GetGlobalMousePosition());
+        int offsetx=1;
+        int offsety=0;
+        if(size == 20) offsetx += size/2;
+        if(size == 25) offsetx += size/4;
+        if(size == 30)
+        {
+            offsetx = -3;
+            offsety = -6; 
+        }
+        
+        for(int i=0; i<size; i++)
+        {
+            for(int j=0; j<size; j++)
+            {
+                int procen = savedata.ground[i,j];
 
-        GD.Print(mouse_tile);
-    }*/
+                switch(procen)
+                {
+                    case 0://wather
+                        SetCell(i+offsetx+size,j+offsety,0);
+                    break;
+
+                    case 2://kole
+                        SetCell(i+offsetx+size,j+offsety,2);
+                    break;
+
+                    default://ground
+                        SetCell(i+offsetx+size,j+offsety,1);
+                    break;
+                }
+            }
+        }
+    }
 }

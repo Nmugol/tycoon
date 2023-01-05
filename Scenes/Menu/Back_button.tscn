@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Script/Menu/Back_button.cs" type="Script" id=1]
+
+[node name="Back_button" type="Button"]
+margin_right = 116.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "BACK"
+script = ExtResource( 1 )
+
+[connection signal="pressed" from="." to="." method="_on_Back_button_pressed"]

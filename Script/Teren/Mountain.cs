@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Mountain : TileMap
 {
@@ -7,61 +8,107 @@ public class Mountain : TileMap
     private int map_size_y;
 
     private Signal signalcs;
+    private Save_bluprint save_file;
 
-    private Random rand = new Random();
+    private SaveData savedata;
+
+    int size;
 
     public override void _Ready()
     {
         signalcs = GetNode<Signal>("/root/Signal");
-        signalcs.Connect("StartGenarate",this,"_GenTeren");
+        save_file = GetNode<Save_bluprint>("/root/SaveBluprint");
+        savedata = GetNode<SaveData>("/root/SaveData");
+
         signalcs.Connect("CheckedMountein",this,"_CheckedMountein");
+
+        size = savedata.moon_size;
+
+        File save = new File();
+        string path = "user://"+savedata.save_file+".json";
+
+        if(save.FileExists(path)) _LoadMap();
+        else _StartGenarate();
     }
 
-    private void _GenTeren(int x_size, int y_size)
+    private void _StartGenarate()
     {
-        map_size_x = x_size;
-        map_size_y = y_size;
+        Random rng = new Random();
 
-        _CleraMap(map_size_x,map_size_y);
+        int size = savedata.moon_size;
+        
+        int[,] tail_tab = new int[size,size];
 
-        for(int i=(map_size_x+1); i<((2*map_size_x)+1); i++)
+        int offsetx=1;
+        int offsety=0;
+        if(size == 20) offsetx += size/2;
+        if(size == 25) offsetx += size/4;
+        if(size == 30)
         {
-            for(int j=0; j<map_size_y; j++)
+            offsetx = -3;
+            offsety = -6; 
+        }
+        for(int i=size+offsetx; i<(2*size)+offsetx; i++)
+        {
+            for(int j=0+offsety; j<size+offsety; j++)
             {
-                int procen = rand.Next(13);
+                int procen = rng.Next(13);
 
                 switch(procen)
                 {
                     case 0: case 1://Mountain
                         SetCell(i,j,0);
+                        tail_tab[i-(size+offsetx),j-offsety]=0;
                         signalcs.EmitSignal(nameof(Signal.SetMountain),i,j);
                     break;
 
                     default://void
                         SetCell(i,j,-1);
+                        tail_tab[i-(size+offsetx),j-offsety]=-1;
                     break;
                 }
             }
         }
+
+        savedata.mountains = tail_tab;
     }
-
-    private void _CleraMap(int size_x, int size_y)
-    {
-
-        for(int i=-1; i<1000; i++)
-        {
-            for(int j=-1; j<1000; j++)
-            {
-                SetCell(i,j,-1);
-            }
-        } 
-    }
-
     private void _CheckedMountein(int x, int y)
     {
         if(GetCell(x,y)!=0)
         {
             signalcs.EmitSignal(nameof(Signal.MounteinIsFree));
+        }
+    }
+
+    void _LoadMap()
+    {
+        int offsetx=1;
+        int offsety=0;
+        if(size == 20) offsetx += size/2;
+        if(size == 25) offsetx += size/4;
+        if(size == 30)
+        {
+            offsetx = -3;
+            offsety = -6; 
+        }
+        
+        for(int i=0; i<size; i++)
+        {
+            for(int j=0; j<size; j++)
+            {
+                int procen = savedata.mountains[i,j];
+
+                switch(procen)
+                {
+                    case 0://wather
+                        SetCell(i+offsetx+size,j+offsety,0);
+                    break;
+                    
+                    default://ground
+                        SetCell(i+offsetx+size,j+offsety,-1);
+                    break;
+                }
+            }
         }
     }
 }

@@ -6,22 +6,21 @@ using System.Collections.Generic;
 public class Storage : PanelContainer
 {
     private Signal signalcs;
+    private Save_bluprint save_file;
+    private SaveData savedata;
     [Export] private Texture[] Item_icons;
-
-    Dictionary<string,int> Items = new Dictionary<string, int>(){
-            {"stone",100},
-            {"irone",200}
-        };
-
     [Export] private NodePath Storenode;
     
     public override void _Ready()
     {
         signalcs = GetNode<Signal>("/root/Signal");
+        save_file = GetNode<Save_bluprint>("/root/SaveBluprint");
+        savedata = GetNode<SaveData>("/root/SaveData");
+
         signalcs.Connect("HaveResorces",this,"_HaveResorces");
         signalcs.Connect("Add_Resorses",this,"_Add_Resorses");
 
-        Add_Store(Items);
+        Add_Store(savedata.Items);
     }
 
     private void Add_Store(Dictionary<string,int> Items)
@@ -30,7 +29,7 @@ public class Storage : PanelContainer
         GridContainer grid = new GridContainer();
 
         int i=0;
-        foreach(var item in Items)
+        foreach(KeyValuePair<string,int> item in Items)
         {
             grid.AddChild(Add_store_items(item.Value,Item_icons[i]));
             i++;
@@ -63,14 +62,14 @@ public class Storage : PanelContainer
         return HBox;
     }
 
-    private void _HaveResorces(string key, int value)
+    private void _HaveResorces(string key, int value, bool g, bool m)
     {
-        if(Items[key]>=value)
+        if(savedata.Items[key]>=value && g==true && m==true)
         {
-            Items[key]-=value;
+            savedata.Items[key]-=value;
             signalcs.EmitSignal(nameof(Signal.YesHaveResorces));
             Remowe_Store();
-            Add_Store(Items);
+            Add_Store(savedata.Items);
         }
         else
         signalcs.EmitSignal(nameof(Signal.NoHaveResorces));
@@ -78,8 +77,8 @@ public class Storage : PanelContainer
 
     private void _Add_Resorses(string key, int value)
     {
-        Items[key]+=value;
+        savedata.Items[key]+=value;
         Remowe_Store();
-        Add_Store(Items);
+        Add_Store(savedata.Items);
     }
 }
